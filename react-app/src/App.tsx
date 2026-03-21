@@ -1,5 +1,4 @@
-import React from "react";
-import AppRoutes from './Routes/Route'; // Asegúrate de usar el nombre y ruta correctos
+import AppRoutes from './Routes/AppRoutes';
 
 import './App.css';
 

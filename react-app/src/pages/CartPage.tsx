@@ -1,186 +1,130 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Header from "../components/Header/Header";
+import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Featured from '../components/Featured/Featured';
-import product1 from '../Img/producto1.jpg'
-import "./CartPage.css";
+import './CartPage.css';
+import { Badge, OptimizedImage, PageStatus } from '../components/ui';
+import { useCart } from '../hooks/useCart';
+import { usePageUXState } from '../hooks/usePageUXState';
 
-const CartTotal: React.FC = () => {
+const CartTotal = () => {
+  const { cartItems, totals, updateQuantity, removeFromCart } = useCart();
+  const { pageState, retry, successMessage, showSuccess } = usePageUXState();
+
+  if (pageState === 'loading') {
+    return <PageStatus state="loading" title="Cargando carrito" description="Actualizando resumen de compra." />;
+  }
+
+  if (pageState === 'error') {
     return (
-        <>
-            <div className='cart-total'>
-                <Header />
-                <div className='cart-total__container'>
-                    <div className='cart-total__active' >
-                        <div className="cart-total__title">
-                            <h1>Carrito de compras</h1>
-                        </div>
-                        <div className="cart-total__info">
-                            <div className='product-list'>
-                                <div className='product-list__card'>
-                                    <div className='cart-total__product-img'>
-                                        <img src={product1} className='' />
-                                    </div>
-                                    <div className='cart-total__product-description'>
-                                        <span className='product-name'>Yezzy Collection</span>
-                                        <div className='product__description'>
-                                            <div className="product-color">
-                                                <p>Color:</p>
-                                                <span>Black</span>
-                                            </div>
-                                            <div className="product-size-cart">
-                                                <p>Tamaño:</p>
-                                                <span>S</span>
-                                            </div>
-                                            <div className="product-quantity">
-                                                <p>Quantity:</p>
-                                                <span>1</span>
-                                            </div>
-                                        </div>
-                                        <button>Edit</button>
-                                    </div>
-                                    <div className='cart-total__product-buttons'>
-                                        <div className='cart-price'>
-                                            <span>$99</span>
-                                        </div>
-                                        <button className='cart-delete'>
-                                            <span>
-                                                <svg width="1em" height="1.05em" viewBox="0 0 15 15.75">
-                                                    <path d="m13.113 10.625v-.608a2.035 2.035 0 0 1 1.924-1.963c.942-.012 3.11-.012 4.052 0a2.034 2.034 0 0 1 1.924 1.963v.608c.175-.039-7.853.962-7.9 0zm6.663 0c0-.254 0-.6 0-.6a.744.744 0 0 0 -.718-.747c-.921-.012-3.068-.012-3.988 0a.776.776 0 0 0 -.73.75v.6z" transform="translate(-9.551 -8.044)"></path>
-                                                    <path d="m2591.8 1408.149h11.036v-12h-11.036z" fill="none" stroke="#000" stroke-width="1.5" transform="translate(-2589.665 -1393.149)"></path>
-                                                    <path d="m0 0h15" fill="none" stroke="#000" stroke-width="1.5" transform="translate(0 3)"></path>
-                                                    <path d="m5.336 5.844h1.16v6.311h-1.16z"></path><path d="m8.631 5.844h1.16v6.311h-1.16z"></path>
-                                                </svg>
-                                            </span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className='product-list__card'>
-                                    <div className='cart-total__product-img'>
-                                        <img src={product1} className='' />
-                                    </div>
-                                    <div className='cart-total__product-description'>
-                                        <span className='product-name'>Yezzy Collection</span>
-                                        <div className='product__description'>
-                                            <div className="product-color">
-                                                <p>Color:</p>
-                                                <span>Black</span>
-                                            </div>
-                                            <div className="product-size-cart">
-                                                <p>Tamaño:</p>
-                                                <span>S</span>
-                                            </div>
-                                            <div className="product-quantity">
-                                                <p>Quantity:</p>
-                                                <span>1</span>
-                                            </div>
-                                        </div>
-                                        <button>Edit</button>
-                                    </div>
-                                    <div className='cart-total__product-buttons'>
-                                        <div className='cart-price'>
-                                            <span>$99</span>
-                                        </div>
-                                        <button className='cart-delete'>
-                                            <span>
-                                                <svg width="1em" height="1.05em" viewBox="0 0 15 15.75">
-                                                    <path d="m13.113 10.625v-.608a2.035 2.035 0 0 1 1.924-1.963c.942-.012 3.11-.012 4.052 0a2.034 2.034 0 0 1 1.924 1.963v.608c.175-.039-7.853.962-7.9 0zm6.663 0c0-.254 0-.6 0-.6a.744.744 0 0 0 -.718-.747c-.921-.012-3.068-.012-3.988 0a.776.776 0 0 0 -.73.75v.6z" transform="translate(-9.551 -8.044)"></path>
-                                                    <path d="m2591.8 1408.149h11.036v-12h-11.036z" fill="none" stroke="#000" stroke-width="1.5" transform="translate(-2589.665 -1393.149)"></path>
-                                                    <path d="m0 0h15" fill="none" stroke="#000" stroke-width="1.5" transform="translate(0 3)"></path>
-                                                    <path d="m5.336 5.844h1.16v6.311h-1.16z"></path><path d="m8.631 5.844h1.16v6.311h-1.16z"></path>
-                                                </svg>
-                                            </span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className='product-list__card'>
-                                    <div className='cart-total__product-img'>
-                                        <img src={product1} className='' />
-                                    </div>
-                                    <div className='cart-total__product-description'>
-                                        <span className='product-name'>Yezzy Collection</span>
-                                        <div className='product__description'>
-                                            <div className="product-color">
-                                                <p>Color:</p>
-                                                <span>Black</span>
-                                            </div>
-                                            <div className="product-size-cart">
-                                                <p>Tamaño:</p>
-                                                <span>S</span>
-                                            </div>
-                                            <div className="product-quantity">
-                                                <p>Quantity:</p>
-                                                <span>1</span>
-                                            </div>
-                                        </div>
-                                        <button>Edit</button>
-                                    </div>
-                                    <div className='cart-total__product-buttons'>
-                                        <div className='cart-price'>
-                                            <span>$99</span>
-                                        </div>
-                                        <button className='cart-delete'>
-                                            <span>
-                                                <svg width="1em" height="1.05em" viewBox="0 0 15 15.75">
-                                                    <path d="m13.113 10.625v-.608a2.035 2.035 0 0 1 1.924-1.963c.942-.012 3.11-.012 4.052 0a2.034 2.034 0 0 1 1.924 1.963v.608c.175-.039-7.853.962-7.9 0zm6.663 0c0-.254 0-.6 0-.6a.744.744 0 0 0 -.718-.747c-.921-.012-3.068-.012-3.988 0a.776.776 0 0 0 -.73.75v.6z" transform="translate(-9.551 -8.044)"></path>
-                                                    <path d="m2591.8 1408.149h11.036v-12h-11.036z" fill="none" stroke="#000" stroke-width="1.5" transform="translate(-2589.665 -1393.149)"></path>
-                                                    <path d="m0 0h15" fill="none" stroke="#000" stroke-width="1.5" transform="translate(0 3)"></path>
-                                                    <path d="m5.336 5.844h1.16v6.311h-1.16z"></path><path d="m8.631 5.844h1.16v6.311h-1.16z"></path>
-                                                </svg>
-                                            </span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='product__summary'>
-                                <h2>Resumen de compra</h2>
-                                <div className='product__detail'>
-                                    <div className="cart-total__product">
-                                        <span>Productos (2)</span>
-                                        <span>S/ 80</span>
-                                    </div>
-                                    <div className="cart-shipping">
-                                        <span>Envíos (2)</span>
-                                        <span>S/ 9.90</span>
-                                    </div>
-                                    <div className="cart-total__total">
-                                        <span>Total</span>
-                                        <span>S/ 89.90</span>
-                                    </div>
-                                </div>
-                                <button className="cart-total__button">Continuar compra</button>
-                                </div>
-                        </div>
-                    </div>
-                    <div className='cart-total__empty'style={{ display: 'none' }} >
-                        <div className='cart-total__empty-content'>
-                            <div className='cart-total__empty-logo'>
-                                <svg aria-hidden="true" className="state_container--grid__icon" width="70" height="54" viewBox="0 0 70 54" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M22.6621 54C17.984 51.3617 13.4035 47.5184 10.6712 42.918C5.87748 34.8467 6.53805 28.9594 9.00287 22.9701C11.4936 16.916 20.5976 13.3489 27.5967 14.4789C34.5957 15.6088 39.4948 22.6359 48.9338 23.6441C58.3728 24.6523 66.0459 29.4308 68.2482 36.2645C70.5602 43.4397 66.0334 49.4376 61.9632 52.3127C61.1241 52.9054 60.2808 53.4646 59.4213 53.9862L22.6621 54Z" fill="black" fill-opacity="0.04"></path><path d="M35.3005 48.9364C35.3005 49.7283 35.057 50.5025 34.601 51.161C34.1449 51.8195 33.4966 52.3327 32.7382 52.6358C31.9797 52.9389 31.1451 53.0182 30.34 52.8637C29.5348 52.7092 28.7952 52.3278 28.2147 51.7678C27.6342 51.2078 27.2389 50.4943 27.0788 49.7176C26.9186 48.9408 27.0008 48.1357 27.315 47.404C27.6291 46.6723 28.1611 46.047 28.8437 45.607C29.5263 45.167 30.3288 44.9321 31.1498 44.9321C32.2506 44.9321 33.3064 45.354 34.0848 46.1049C34.8632 46.8559 35.3005 47.8744 35.3005 48.9364Z" fill="white" stroke="#333333" stroke-width="1.5"></path><path d="M52.9226 48.9364C52.9226 49.7283 52.6791 50.5025 52.223 51.161C51.7669 51.8195 51.1187 52.3327 50.3602 52.6358C49.6018 52.9389 48.7672 53.0182 47.9621 52.8637C47.1569 52.7092 46.4173 52.3278 45.8368 51.7678C45.2563 51.2078 44.861 50.4943 44.7009 49.7176C44.5407 48.9408 44.6229 48.1357 44.937 47.404C45.2512 46.6723 45.7832 46.047 46.4658 45.607C47.1484 45.167 47.9509 44.9321 48.7718 44.9321C49.8727 44.9321 50.9284 45.354 51.7068 46.1049C52.4853 46.8559 52.9226 47.8744 52.9226 48.9364Z" fill="white" stroke="#333333" stroke-width="1.5"></path><path d="M55.9736 34.4237L23.5129 34.4237L18.9494 16.7051L62.9397 16.7051L58.3767 32.613C58.0692 33.685 57.0888 34.4237 55.9736 34.4237ZM63.1226 16.0672L63.1223 16.0682L63.1226 16.0672Z" fill="#EEEEEE" stroke="white" stroke-width="3" stroke-linecap="square"></path><path d="M22.3503 35.9237L55.9736 35.9237C57.758 35.9237 59.3265 34.7418 59.8185 33.0266L64.5645 16.4808C64.7478 15.8418 64.2681 15.2051 63.6033 15.2051L17.0142 15.2051L22.3503 35.9237Z" stroke="#333333" stroke-width="1.5" stroke-linecap="square"></path><line x1="18.7505" y1="22.7261" x2="62.3655" y2="22.7261" stroke="#333333" stroke-width="1.5" stroke-linecap="round"></line><line x1="20.9172" y1="30.1001" x2="60.4778" y2="30.1001" stroke="#333333" stroke-width="1.5" stroke-linecap="round"></line><path d="M11.7366 4.85498C13.2886 4.98674 14.5832 6.05372 14.9604 7.51206L23.4621 40.3958C23.6466 41.1092 24.3109 41.6098 25.073 41.6098H55.057" stroke="#333333" stroke-width="1.5" stroke-linecap="round"></path><path d="M32.6701 46.9908C33.3912 49.1578 30.3097 50.1985 29.3959 47.9986C28.8517 46.6812 26.9448 41.6094 26.9448 41.6094H30.5274H34.11C34.11 41.6094 31.7269 44.1607 32.6701 46.9908Z" fill="white"></path><path d="M32.6701 46.9908C33.3912 49.1578 30.3097 50.1985 29.3959 47.9986C28.8517 46.6812 26.9448 41.6094 26.9448 41.6094H30.5274H34.11C34.11 41.6094 31.7269 44.1607 32.6701 46.9908Z" stroke="#333333" stroke-width="1.5"></path><path d="M50.2922 46.9908C51.0132 49.1578 47.9318 50.1985 47.018 47.9986C46.4738 46.6812 44.5669 41.6094 44.5669 41.6094H48.1495H51.732C51.732 41.6094 49.3489 44.1607 50.2922 46.9908Z" fill="white"></path><path d="M50.2922 46.9908C51.0132 49.1578 47.9318 50.1985 47.018 47.9986C46.4738 46.6812 44.5669 41.6094 44.5669 41.6094H48.1495H51.732C51.732 41.6094 49.3489 44.1607 50.2922 46.9908Z" stroke="#333333" stroke-width="1.5"></path><path d="M3.31856 2.04498C2.3138 1.95968 1.42759 2.67631 1.33917 3.64561C1.25075 4.61492 1.9936 5.46984 2.99837 5.55514L10.8275 6.21979C11.1928 6.2508 11.5151 5.99021 11.5473 5.63774L11.751 3.404C11.7832 3.05152 11.513 2.74064 11.1477 2.70962L3.31856 2.04498Z" fill="white" stroke="#333333" stroke-width="1.5" stroke-linecap="round"></path><path d="M33.4013 35.9175L28.1064 15.3804" stroke="#333333" stroke-width="1.5" stroke-linecap="round"></path><path d="M45.3417 35.9175L40.0469 15.3804" stroke="#333333" stroke-width="1.5" stroke-linecap="round"></path><path d="M51.9871 15.3804L57.1754 35.5044" stroke="#333333" stroke-width="1.5" stroke-linecap="round"></path><path d="M69.6677 52.9404H9.79736" stroke="#333333" stroke-width="1.5"></path><path d="M29.8208 5.44531L35.1403 9.85297" stroke="#333333" stroke-width="1.5" stroke-linecap="round"></path><path d="M51.1311 5.44531L45.8116 9.85297" stroke="#333333" stroke-width="1.5" stroke-linecap="round"></path><path d="M40.4758 0.901855V8.4523" stroke="#333333" stroke-width="1.5" stroke-linecap="round"></path></svg>
-                            </div>
-                            <div className='cart-total__empty-description'>
-                                <h1>Tu carrito está vacío</h1>
-                                <p>Agrega productos y consigue envío gratis</p>
-                            </div>
-                        </div>
-                        <div className='cart-total__empty-summary'>
-                            <h2>Resumen de compra</h2>
-                            <p>Aquí verás los importes de tu compra una vez que agregues productos.</p>
-                        </div>
-                    </div>
-                </div>
-                <div className='featured__container'>
-                    <Featured
-                        title={'Quizas te puedan interesar'}
-                        customClass={'featured__title--small'}
-                        productClass={'product-card-cart'}
-                        featuredClass={'featured-cart'}
-                    />
-                </div>
-                <Footer />
-            </div>
-        </>
-    )
-}
+      <PageStatus
+        state="error"
+        title="No se pudo cargar carrito"
+        description="Intenta recargar la página."
+        onRetry={retry}
+      />
+    );
+  }
 
-export default CartTotal; 
+  return (
+    <>
+      <div className="cart-total">
+        <Header />
+        <div className="cart-total__container">
+          {cartItems.length > 0 ? (
+            <div className="cart-total__active">
+              <div className="cart-total__title">
+                <h1>Carrito de compras</h1>
+                {successMessage ? <Badge variant="success">{successMessage}</Badge> : null}
+              </div>
+              <div className="cart-total__info">
+                <div className="product-list">
+                  {cartItems.map((item) => (
+                    <div className="product-list__card" key={item.id}>
+                      <div className="cart-total__product-img">
+                        <OptimizedImage src={item.product.primaryImg} alt={item.product.name} />
+                      </div>
+                      <div className="cart-total__product-description">
+                        <span className="product-name">{item.product.name}</span>
+                        <div className="product__description">
+                          <div className="product-color">
+                            <p>Color:</p>
+                            <span>Black</span>
+                          </div>
+                          <div className="product-size-cart">
+                            <p>Tamaño:</p>
+                            <span>{item.size ?? 'S'}</span>
+                          </div>
+                          <div className="product-quantity">
+                            <p>Quantity:</p>
+                            <input
+                              type="number"
+                              min={1}
+                              value={item.quantity}
+                              onChange={(event) => {
+                                updateQuantity(item.productId, Number(event.target.value) || 1);
+                                showSuccess('Cantidad actualizada');
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="cart-total__product-buttons">
+                        <div className="cart-price">
+                          <span>${item.subtotal.toFixed(2)}</span>
+                        </div>
+                        <button
+                          className="cart-delete"
+                          onClick={() => {
+                            removeFromCart(item.productId);
+                            showSuccess('Producto eliminado del carrito');
+                          }}
+                        >
+                          <span>Eliminar</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="product__summary">
+                  <h2>Resumen de compra</h2>
+                  <div className="product__detail">
+                    <div className="cart-total__product">
+                      <span>Productos ({cartItems.length})</span>
+                      <span>S/ {totals.subtotal.toFixed(2)}</span>
+                    </div>
+                    <div className="cart-shipping">
+                      <span>Envíos</span>
+                      <span>S/ {totals.shipping.toFixed(2)}</span>
+                    </div>
+                    <div className="cart-total__total">
+                      <span>Total</span>
+                      <span>S/ {totals.total.toFixed(2)}</span>
+                    </div>
+                  </div>
+                  <button className="cart-total__button">Continuar compra</button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <PageStatus
+              state="empty"
+              title="Tu carrito está vacío"
+              description="Agrega productos y consigue envío gratis."
+            />
+          )}
+        </div>
+        <div className="featured__container">
+          <Featured
+            title={'Quizas te puedan interesar'}
+            customClass={'featured__title--small'}
+            productClass={'product-card-cart'}
+            featuredClass={'featured-cart'}
+          />
+        </div>
+        <Footer />
+      </div>
+    </>
+  );
+};
+
+export default CartTotal;
