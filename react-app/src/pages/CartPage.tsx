@@ -2,10 +2,28 @@ import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Featured from '../components/Featured/Featured';
 import './CartPage.css';
+import { Badge, PageStatus } from '../components/ui';
 import { useCart } from '../hooks/useCart';
+import { usePageUXState } from '../hooks/usePageUXState';
 
 const CartTotal = () => {
   const { cartItems, totals, updateQuantity, removeFromCart } = useCart();
+  const { pageState, retry, successMessage, showSuccess } = usePageUXState();
+
+  if (pageState === 'loading') {
+    return <PageStatus state="loading" title="Cargando carrito" description="Actualizando resumen de compra." />;
+  }
+
+  if (pageState === 'error') {
+    return (
+      <PageStatus
+        state="error"
+        title="No se pudo cargar carrito"
+        description="Intenta recargar la página."
+        onRetry={retry}
+      />
+    );
+  }
 
   return (
     <>
@@ -16,6 +34,7 @@ const CartTotal = () => {
             <div className="cart-total__active">
               <div className="cart-total__title">
                 <h1>Carrito de compras</h1>
+                {successMessage ? <Badge variant="success">{successMessage}</Badge> : null}
               </div>
               <div className="cart-total__info">
                 <div className="product-list">
@@ -41,9 +60,10 @@ const CartTotal = () => {
                               type="number"
                               min={1}
                               value={item.quantity}
-                              onChange={(event) =>
-                                updateQuantity(item.productId, Number(event.target.value) || 1)
-                              }
+                              onChange={(event) => {
+                                updateQuantity(item.productId, Number(event.target.value) || 1);
+                                showSuccess('Cantidad actualizada');
+                              }}
                             />
                           </div>
                         </div>
@@ -52,16 +72,14 @@ const CartTotal = () => {
                         <div className="cart-price">
                           <span>${item.subtotal.toFixed(2)}</span>
                         </div>
-                        <button className="cart-delete" onClick={() => removeFromCart(item.productId)}>
-                          <span>
-                            <svg width="1em" height="1.05em" viewBox="0 0 15 15.75">
-                              <path d="m13.113 10.625v-.608a2.035 2.035 0 0 1 1.924-1.963c.942-.012 3.11-.012 4.052 0a2.034 2.034 0 0 1 1.924 1.963v.608c.175-.039-7.853.962-7.9 0zm6.663 0c0-.254 0-.6 0-.6a.744.744 0 0 0 -.718-.747c-.921-.012-3.068-.012-3.988 0a.776.776 0 0 0 -.73.75v.6z" transform="translate(-9.551 -8.044)"></path>
-                              <path d="m2591.8 1408.149h11.036v-12h-11.036z" fill="none" stroke="#000" strokeWidth="1.5" transform="translate(-2589.665 -1393.149)"></path>
-                              <path d="m0 0h15" fill="none" stroke="#000" strokeWidth="1.5" transform="translate(0 3)"></path>
-                              <path d="m5.336 5.844h1.16v6.311h-1.16z"></path>
-                              <path d="m8.631 5.844h1.16v6.311h-1.16z"></path>
-                            </svg>
-                          </span>
+                        <button
+                          className="cart-delete"
+                          onClick={() => {
+                            removeFromCart(item.productId);
+                            showSuccess('Producto eliminado del carrito');
+                          }}
+                        >
+                          <span>Eliminar</span>
                         </button>
                       </div>
                     </div>
@@ -88,18 +106,11 @@ const CartTotal = () => {
               </div>
             </div>
           ) : (
-            <div className="cart-total__empty">
-              <div className="cart-total__empty-content">
-                <div className="cart-total__empty-description">
-                  <h1>Tu carrito está vacío</h1>
-                  <p>Agrega productos y consigue envío gratis</p>
-                </div>
-              </div>
-              <div className="cart-total__empty-summary">
-                <h2>Resumen de compra</h2>
-                <p>Aquí verás los importes de tu compra una vez que agregues productos.</p>
-              </div>
-            </div>
+            <PageStatus
+              state="empty"
+              title="Tu carrito está vacío"
+              description="Agrega productos y consigue envío gratis."
+            />
           )}
         </div>
         <div className="featured__container">

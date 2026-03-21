@@ -27,7 +27,7 @@ export const useCart = () => {
             subtotal: product.discountedPrice * item.quantity,
           };
         })
-        .filter((item): item is DetailedCartItem => item !== null),
+        .filter((item: DetailedCartItem | null): item is DetailedCartItem => item !== null),
     [cart],
   );
 

@@ -3,17 +3,36 @@ import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Featured from '../components/Featured/Featured';
 import './Product_detail.css';
+import { Badge, PageStatus } from '../components/ui';
 import { useProducts } from '../hooks/useProducts';
 import { useCart } from '../hooks/useCart';
+import { usePageUXState } from '../hooks/usePageUXState';
 
 const ProductDetail: React.FC = () => {
   const { products } = useProducts();
   const { addToCart } = useCart();
+  const { pageState, retry, successMessage, showSuccess } = usePageUXState();
   const featuredProduct = products[0];
 
-  if (!featuredProduct) {
-    return null;
+  if (pageState === 'loading') {
+    return <PageStatus state="loading" title="Cargando producto" description="Preparando detalle." />;
   }
+
+  if (pageState === 'error') {
+    return (
+      <PageStatus
+        state="error"
+        title="Error al cargar producto"
+        description="No pudimos recuperar el detalle del producto."
+        onRetry={retry}
+      />
+    );
+  }
+
+  if (!featuredProduct) {
+    return <PageStatus state="empty" title="Producto no disponible" description="Prueba con otro producto." />;
+  }
+
   return (
     <>
       <Header />
@@ -53,13 +72,20 @@ const ProductDetail: React.FC = () => {
                   </div>
                 </div>
                 <div className="product-add__buttons">
-                  <button className="product-addCart__btn" onClick={() => addToCart(featuredProduct.id)}>
+                  <button
+                    className="product-addCart__btn"
+                    onClick={() => {
+                      addToCart(featuredProduct.id);
+                      showSuccess('Producto agregado al carrito');
+                    }}
+                  >
                     <i className="fa-solid fa-plus"></i>
                     Agregar al carrito
                   </button>
                   <button className="product-addNow__btn">Comprar ahora</button>
                 </div>
               </div>
+              {successMessage ? <Badge variant="success">{successMessage}</Badge> : null}
               <div className="product-description">
                 <h2>Descripción</h2>
                 <p>{featuredProduct.description}</p>

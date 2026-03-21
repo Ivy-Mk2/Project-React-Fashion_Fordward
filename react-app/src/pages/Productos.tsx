@@ -1,16 +1,43 @@
 import { Link } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
+import { Badge, PageStatus } from '../components/ui';
 import { useProducts } from '../hooks/useProducts';
+import { usePageUXState } from '../hooks/usePageUXState';
 
 const Productos: React.FC = () => {
   const { products } = useProducts();
+  const { pageState, retry, successMessage, showSuccess } = usePageUXState();
+
+  if (pageState === 'loading') {
+    return <PageStatus state="loading" title="Cargando productos" description="Trayendo catálogo" />;
+  }
+
+  if (pageState === 'error') {
+    return (
+      <PageStatus
+        state="error"
+        title="No se pudo cargar productos"
+        description="Verifica conexión e inténtalo nuevamente."
+        onRetry={retry}
+      />
+    );
+  }
+
+  if (!products.length) {
+    return <PageStatus state="empty" title="Sin productos" description="Aún no hay productos para mostrar." />;
+  }
+
   return (
     <div>
       <Header />
       <section className="featured">
         <div className="featured__header">
           <h3 className="featured__title">Productos</h3>
+          <button onClick={() => showSuccess('Catálogo actualizado')} className="sale-banner__button">
+            Actualizar catálogo
+          </button>
+          {successMessage ? <Badge variant="success">{successMessage}</Badge> : null}
         </div>
         <div className="featured__display">
           {products.map((product) => (
