@@ -2,6 +2,7 @@ import useDropdown from '../Hooks/hooks';
 import product1 from '../../Img/producto1.jpg';
 import { Link } from 'react-router-dom';
 import { useCart } from '../../hooks/useCart';
+import { OptimizedImage } from '../ui';
  
 
 const CartDropdown = ()=> {
@@ -11,7 +12,19 @@ const CartDropdown = ()=> {
     return(
         <>
             <div className="cart">
-                <div className="header__icon" onClick={toggleDropdown} ref={dropdownRefIcon} >
+                <div
+                  className="header__icon"
+                  onClick={toggleDropdown}
+                  ref={dropdownRefIcon}
+                  aria-label="Abrir carrito"
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      toggleDropdown(event);
+                    }
+                  }}
+                >
                     <i className=" fa-solid fa-basket-shopping"></i>
                 </div>
                 <div className="cart__header">
@@ -27,7 +40,7 @@ const CartDropdown = ()=> {
                                     <span className='tittle__header' >Mi Carrito</span>
                                     <span className="cart__total" id='cart__total'><span>{cartCount}</span></span>
                                 </div>
-                            <button><i className="fa-solid fa-x" onClick={toggleDropdown} ></i></button>
+                            <button aria-label="Cerrar carrito"><i className="fa-solid fa-x" onClick={toggleDropdown} ></i></button>
                         </div>
                         <div className="dropdown__products">
                                 <div className="products-container">
@@ -35,7 +48,7 @@ const CartDropdown = ()=> {
                                         <i className="fa-solid fa-x"></i>
                                     </div>
                                     <div className="product-img-container">
-                                        <img src={product1} className="header__dropdown-product-img"/>
+                                        <OptimizedImage src={product1} alt="Producto en carrito" className="header__dropdown-product-img"/>
                                     </div>  
                                     <div className="dropdown__info-container">
                                         <h1 className="product-title">Yezzy Collection</h1>
@@ -52,7 +65,7 @@ const CartDropdown = ()=> {
                                         <i className="fa-solid fa-x"></i>
                                     </div>
                                     <div className="product-img-container">
-                                        <img src={product1} className="header__dropdown-product-img"/>
+                                        <OptimizedImage src={product1} alt="Producto en carrito" className="header__dropdown-product-img"/>
                                     </div>  
                                     <div className="dropdown__info-container">
                                         <h1 className="product-title">Yezzy Collection</h1>
@@ -69,7 +82,7 @@ const CartDropdown = ()=> {
                                         <i className="fa-solid fa-x"></i>
                                     </div>
                                     <div className="product-img-container">
-                                        <img src={product1} className="header__dropdown-product-img"/>
+                                        <OptimizedImage src={product1} alt="Producto en carrito" className="header__dropdown-product-img"/>
                                     </div>  
                                     <div className="dropdown__info-container">
                                         <h1 className="product-title">Yezzy Collection</h1>
@@ -86,7 +99,7 @@ const CartDropdown = ()=> {
                                         <i className="fa-solid fa-x"></i>
                                     </div>
                                     <div className="product-img-container">
-                                        <img src={product1} className="header__dropdown-product-img"/>
+                                        <OptimizedImage src={product1} alt="Producto en carrito" className="header__dropdown-product-img"/>
                                     </div>  
                                     <div className="dropdown__info-container">
                                         <h1 className="product-title">Yezzy Collection</h1>

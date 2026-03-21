@@ -5,7 +5,7 @@ function useDropdown<T extends HTMLElement>() {
     const dropdownRef = useRef<T>(null);
     const dropdownRefIcon = useRef<T>(null);
   
-    const toggleDropdown = (e: React.MouseEvent) => {
+    const toggleDropdown = (e: { stopPropagation: () => void }) => {
       e.stopPropagation(); // Evitar que el evento se propague al listener global
       setIsActive((prev) => !prev);
     };

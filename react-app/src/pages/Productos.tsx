@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
-import { Badge, PageStatus } from '../components/ui';
+import { Badge, OptimizedImage, PageStatus } from '../components/ui';
 import { useProducts } from '../hooks/useProducts';
 import { usePageUXState } from '../hooks/usePageUXState';
 
@@ -43,12 +43,12 @@ const Productos: React.FC = () => {
           {products.map((product) => (
             <div className="product-card" key={product.id}>
               <div className="product-card__img-container">
-                <img
+                <OptimizedImage
                   src={product.primaryImg}
                   alt={product.description}
                   className="product-card__img product-card__img--primary"
                 />
-                <img
+                <OptimizedImage
                   src={product.secondaryImg}
                   alt={product.description}
                   className="product-card__img product-card__img--secondary"

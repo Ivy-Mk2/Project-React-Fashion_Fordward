@@ -3,6 +3,7 @@ import './Featured.css';
 import { FC } from 'react';
 import { useProducts } from '../../hooks/useProducts';
 import { useCart } from '../../hooks/useCart';
+import { OptimizedImage } from '../ui';
 
 interface FeaturedProps {
   title: string;
@@ -29,23 +30,30 @@ const Featured: FC<FeaturedProps> = ({
         {featuredProducts.map((product) => (
           <div className={`product-card ${productClass || 'product-card'}`} key={product.id}>
             <div className="product-card__img-container">
-              <img
+              <OptimizedImage
                 src={product.primaryImg}
                 alt={product.description}
                 className="product-card__img product-card__img--primary"
               />
-              <img
+              <OptimizedImage
                 src={product.secondaryImg}
                 alt={product.description}
                 className="product-card__img product-card__img--secondary"
               />
               <div className="product-card__actions">
-                <i
-                  className={`fa-heart ${favorites.includes(product.id) ? 'fa-solid' : 'fa-regular'}`}
+                <button
+                  type="button"
+                  aria-label="Agregar a favoritos"
                   onClick={() => toggleFavorite(product.id)}
-                ></i>
-                <i className="fa-solid fa-cart-shopping" onClick={() => addToCart(product.id)}></i>
-                <i className="fa-solid fa-shuffle"></i>
+                >
+                  <i className={`fa-heart ${favorites.includes(product.id) ? 'fa-solid' : 'fa-regular'}`}></i>
+                </button>
+                <button type="button" aria-label="Agregar al carrito" onClick={() => addToCart(product.id)}>
+                  <i className="fa-solid fa-cart-shopping"></i>
+                </button>
+                <button type="button" aria-label="Comparar producto">
+                  <i className="fa-solid fa-shuffle"></i>
+                </button>
               </div>
             </div>
             <div className="product-card__description">

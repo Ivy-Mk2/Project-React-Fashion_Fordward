@@ -3,7 +3,7 @@ import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Featured from '../components/Featured/Featured';
 import './Product_detail.css';
-import { Badge, PageStatus } from '../components/ui';
+import { Badge, OptimizedImage, PageStatus } from '../components/ui';
 import { useProducts } from '../hooks/useProducts';
 import { useCart } from '../hooks/useCart';
 import { usePageUXState } from '../hooks/usePageUXState';
@@ -40,7 +40,7 @@ const ProductDetail: React.FC = () => {
         <main className="main">
           <div className="product-container">
             <section className="product-Img">
-              <img src={featuredProduct.primaryImg} alt={featuredProduct.name} />
+              <OptimizedImage src={featuredProduct.primaryImg} alt={featuredProduct.name} loading="eager" />
             </section>
             <section className="product-info">
               <h2 className="product-info__name">{featuredProduct.name}</h2>
@@ -82,7 +82,9 @@ const ProductDetail: React.FC = () => {
                     <i className="fa-solid fa-plus"></i>
                     Agregar al carrito
                   </button>
-                  <button className="product-addNow__btn">Comprar ahora</button>
+                  <button className="product-addNow__btn" aria-label="Comprar producto ahora">
+                    Comprar ahora
+                  </button>
                 </div>
               </div>
               {successMessage ? <Badge variant="success">{successMessage}</Badge> : null}

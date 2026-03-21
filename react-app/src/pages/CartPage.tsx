@@ -2,7 +2,7 @@ import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Featured from '../components/Featured/Featured';
 import './CartPage.css';
-import { Badge, PageStatus } from '../components/ui';
+import { Badge, OptimizedImage, PageStatus } from '../components/ui';
 import { useCart } from '../hooks/useCart';
 import { usePageUXState } from '../hooks/usePageUXState';
 
@@ -41,7 +41,7 @@ const CartTotal = () => {
                   {cartItems.map((item) => (
                     <div className="product-list__card" key={item.id}>
                       <div className="cart-total__product-img">
-                        <img src={item.product.primaryImg} alt={item.product.name} />
+                        <OptimizedImage src={item.product.primaryImg} alt={item.product.name} />
                       </div>
                       <div className="cart-total__product-description">
                         <span className="product-name">{item.product.name}</span>

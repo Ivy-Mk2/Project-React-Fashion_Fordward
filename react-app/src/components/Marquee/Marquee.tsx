@@ -3,6 +3,7 @@ import 'react-multi-carousel/lib/styles.css';
 import { Link } from 'react-router-dom';
 import styles from './Marquee.module.css';
 import { useProducts } from '../../hooks/useProducts';
+import { OptimizedImage } from '../ui';
 
 const Marquee = () => {
   const { products } = useProducts();
@@ -36,7 +37,7 @@ const Marquee = () => {
             <div className={styles['product-card']} key={product.id}>
               <div className={styles['product-card__container']}>
                 <div className={styles['product-card__img-container']}>
-                  <img
+                  <OptimizedImage
                     src={product.primaryImg}
                     alt={product.description}
                     className={`${styles['product-card__img']} ${styles['product-card__img--primary']}`}
