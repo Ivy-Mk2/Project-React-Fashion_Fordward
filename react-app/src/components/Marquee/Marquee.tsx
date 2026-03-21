@@ -2,9 +2,10 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Link } from 'react-router-dom';
 import styles from './Marquee.module.css';
-import { products } from '../../data/products';
+import { useProducts } from '../../hooks/useProducts';
 
 const Marquee = () => {
+  const { products } = useProducts();
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },

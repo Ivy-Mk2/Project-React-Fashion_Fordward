@@ -3,11 +3,17 @@ import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import Featured from '../components/Featured/Featured';
 import './Product_detail.css';
-import { products } from '../data/products';
-
-const featuredProduct = products[0];
+import { useProducts } from '../hooks/useProducts';
+import { useCart } from '../hooks/useCart';
 
 const ProductDetail: React.FC = () => {
+  const { products } = useProducts();
+  const { addToCart } = useCart();
+  const featuredProduct = products[0];
+
+  if (!featuredProduct) {
+    return null;
+  }
   return (
     <>
       <Header />
@@ -47,7 +53,7 @@ const ProductDetail: React.FC = () => {
                   </div>
                 </div>
                 <div className="product-add__buttons">
-                  <button className="product-addCart__btn">
+                  <button className="product-addCart__btn" onClick={() => addToCart(featuredProduct.id)}>
                     <i className="fa-solid fa-plus"></i>
                     Agregar al carrito
                   </button>

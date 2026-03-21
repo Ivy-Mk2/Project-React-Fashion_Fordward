@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Featured.css';
 import { FC } from 'react';
-import { products } from '../../data/products';
+import { useProducts } from '../../hooks/useProducts';
+import { useCart } from '../../hooks/useCart';
 
 interface FeaturedProps {
   title: string;
@@ -17,14 +17,8 @@ const Featured: FC<FeaturedProps> = ({
   productClass = '',
   featuredClass = '',
 }) => {
-  const [likedProducts, setLikedProducts] = useState<{ [key: number]: boolean }>({});
-
-  const toggleLike = (id: number) => {
-    setLikedProducts((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
+  const { featuredProducts } = useProducts();
+  const { favorites, toggleFavorite, addToCart } = useCart();
 
   return (
     <div className={`featured ${featuredClass || 'featured'}`}>
@@ -32,7 +26,7 @@ const Featured: FC<FeaturedProps> = ({
         <h3 className={`featured__title ${customClass}`}>{title}</h3>
       </div>
       <div className="featured__display">
-        {products.slice(0, 6).map((product) => (
+        {featuredProducts.map((product) => (
           <div className={`product-card ${productClass || 'product-card'}`} key={product.id}>
             <div className="product-card__img-container">
               <img
@@ -47,10 +41,10 @@ const Featured: FC<FeaturedProps> = ({
               />
               <div className="product-card__actions">
                 <i
-                  className={`fa-heart ${likedProducts[product.id] ? 'fa-solid' : 'fa-regular'}`}
-                  onClick={() => toggleLike(product.id)}
+                  className={`fa-heart ${favorites.includes(product.id) ? 'fa-solid' : 'fa-regular'}`}
+                  onClick={() => toggleFavorite(product.id)}
                 ></i>
-                <i className="fa-solid fa-cart-shopping"></i>
+                <i className="fa-solid fa-cart-shopping" onClick={() => addToCart(product.id)}></i>
                 <i className="fa-solid fa-shuffle"></i>
               </div>
             </div>

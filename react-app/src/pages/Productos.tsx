@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
-import { products } from '../data/products';
+import { useProducts } from '../hooks/useProducts';
 
 const Productos: React.FC = () => {
+  const { products } = useProducts();
   return (
     <div>
       <Header />
